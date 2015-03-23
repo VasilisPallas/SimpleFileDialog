@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">SimpleFileDialog</string>
-
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_file_dialog">FileDialog</string>
+    <string name="browse">Browse..</string>
+    <string name="select_file">Select file</string>
+    <string name="select_storage">Select storage</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="internal_storage_path">/storage/emulated/0</string>
+    <string name="sd_storage">SD card storage</string>
+    <string name="sd_storage_path">/mnt/extSdCard/</string>
+
+
 </resources>
