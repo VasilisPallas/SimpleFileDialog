@@ -229,29 +229,7 @@ public class FileDialog extends Activity {
                     listView.setAdapter(customListAdapter);
                 }// Checks if '..' was clicked
                 else if (chosenFile.equalsIgnoreCase("..")) {
-
-                    // present directory removed from list
-                    String s = dirNames.remove(dirNames.size() - 1);
-
-                    // rootPath modified to exclude present directory
-                    rootPath = new File(rootPath.toString().substring(0,
-                            rootPath.toString().lastIndexOf(s)));
-                    imageItems = null;
-
-                    // if there are no more directories in the list, then
-                    // its the first level
-
-                    if (dirNames.isEmpty() || rootPath.equals(Environment.getExternalStorageDirectory() + "")
-                            || rootPath.equals("/mnt/extSdCard/")
-                            || rootPath.equals("/mnt/external_sd/")) {
-                        isTopParent = true;
-                    }
-
-                    loadFiles(null);
-
-                    listView.setAdapter(null);
-                    listView.setAdapter(customListAdapter);
-
+                    backButtonPresses();
                 } // Do something with the selected file here
                 else {
 
@@ -397,4 +375,38 @@ public class FileDialog extends Activity {
         }
     };
 
+    public void backButtonPresses()
+    {
+        if (!isTopParent) {
+            // present directory removed from list
+            String s = dirNames.remove(dirNames.size() - 1);
+
+            // rootPath modified to exclude present directory
+            rootPath = new File(rootPath.toString().substring(0,
+                    rootPath.toString().lastIndexOf(s)));
+            imageItems = null;
+
+            // if there are no more directories in the list, then
+            // its the first level
+
+            if (dirNames.isEmpty() || rootPath.equals(Environment.getExternalStorageDirectory() + "")
+                    || rootPath.equals("/mnt/extSdCard/")
+                    || rootPath.equals("/mnt/external_sd/")) {
+                isTopParent = true;
+            }
+
+            loadFiles(null);
+
+            listView.setAdapter(null);
+            listView.setAdapter(customListAdapter);
+        }else
+        {
+            finish();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        backButtonPresses();
+    }
 }
