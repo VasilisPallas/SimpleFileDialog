@@ -103,8 +103,10 @@ public class FileDialog extends Activity {
             Log.e("Error", "unable to write on the SD card.");
         }
 
+
         // Checks if rootPath exists
         if (rootPath.exists()) {
+
             FilenameFilter filter = new FilenameFilter() {
                 @Override
                 public boolean accept(File dir, String filename) {
@@ -203,17 +205,11 @@ public class FileDialog extends Activity {
             return;
         }
 
-
         listView.setAdapter(customListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                if (!searchText.getText().equals("")) {
-                    searchText.setText("");
-                    deleteSearchIcon.setVisibility(View.GONE);
-                }
 
                 chosenFile = imageItems.get(position).getTitle();
                 selectedFile = new File(rootPath + "/" + chosenFile);
@@ -262,6 +258,10 @@ public class FileDialog extends Activity {
                     Toast.makeText(getApplicationContext(), "You have selected " + rootPath + "/" + chosenFile, Toast.LENGTH_SHORT).show();
                 }
 
+                if (!searchText.getText().equals("")) {
+                    searchText.setText("");
+                    deleteSearchIcon.setVisibility(View.GONE);
+                }
             }
         });
     }
@@ -277,7 +277,6 @@ public class FileDialog extends Activity {
             listView.setEnabled(false);
         }
     }
-
 
     private void hideView(final View view) {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
@@ -371,7 +370,6 @@ public class FileDialog extends Activity {
         searchText.setText("");
     }
 
-
     private TextWatcher searchListView = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -388,7 +386,8 @@ public class FileDialog extends Activity {
             }
 
             loadFiles(s.toString().trim());
-            fillList();
+
+            //fillList();
 
         }
 
