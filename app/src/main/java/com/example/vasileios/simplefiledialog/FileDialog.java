@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -31,8 +35,8 @@ public class FileDialog extends Activity {
     // Source path
     private File rootPath = new File(Environment.getExternalStorageDirectory() + "");
 
-    ArrayList<ListItems> imageItems;
-    ArrayList<String> fileNames = new ArrayList<String>();
+    private ArrayList<ListItems> imageItems;
+    private ArrayList<String> fileNames = new ArrayList<String>();
 
     // Check if the first level of the directory structure is the one showing
     private Boolean isTopParent = true;
@@ -42,11 +46,13 @@ public class FileDialog extends Activity {
     private String chosenFile;
 
     // Stores names of traversed directories
-    ArrayList<String> dirNames = new ArrayList<String>();
+    private ArrayList<String> dirNames = new ArrayList<String>();
 
-    Bitmap bitmap;
+    private Bitmap bitmap;
 
-    LinearLayout menu;
+    private LinearLayout menu;
+
+    EditText searchText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,10 @@ public class FileDialog extends Activity {
         listView.setExpanded(true);
 
         menu = (LinearLayout) findViewById(R.id.file_manager_menu);
+
+        searchText = (EditText) findViewById(R.id.search_text);
+
+        searchText.addTextChangedListener(searchListView);
 
         loadFiles();
         fillList();
@@ -244,7 +254,6 @@ public class FileDialog extends Activity {
         });
     }
 
-
     public void showOptions(View v) {
         if (menu.getVisibility() == View.VISIBLE) {
             menu.bringToFront();
@@ -256,6 +265,7 @@ public class FileDialog extends Activity {
             listView.setEnabled(false);
         }
     }
+
 
     private void hideView(final View view) {
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_out);
@@ -339,5 +349,37 @@ public class FileDialog extends Activity {
         }
 
     }
+
+    public void deleteSearchText(View v) {
+        searchText.setText("");
+    }
+
+
+    private TextWatcher searchListView = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            ImageView deleteSearchIcon = (ImageView)findViewById(R.id.delete_search_icon);
+            if(count>0)
+            {
+                deleteSearchIcon.setVisibility(View.VISIBLE);
+            }
+            else{
+                deleteSearchIcon.setVisibility(View.GONE);
+            }
+
+            customListAdapter.getFilter().filter(s.toString());
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }

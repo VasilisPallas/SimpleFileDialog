@@ -23,7 +23,6 @@
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:layout_centerVertical="true"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/options" />
 
@@ -39,6 +38,49 @@
             android:textColor="#FFFFFF"
             android:textSize="22dp" />
 
+        <LinearLayout
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/search_layout_shape">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/search"
+                android:layout_gravity="center_vertical"
+                android:paddingLeft="8dp"
+                android:paddingTop="1dp"/>
+
+            <EditText
+                android:id="@+id/search_text"
+                android:layout_width="100dp"
+                android:singleLine="true"
+                android:text="wsfsfsfsi"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_gravity="center_vertical"
+                android:textSize="14sp"
+                android:background="#00000000"
+                android:layout_height="wrap_content"
+                />
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/delete_search_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/delete_search"
+                android:layout_marginLeft="2dp"
+                android:layout_gravity="center_vertical"
+                android:clickable="true"
+                android:onClick="deleteSearchText"/>
+
+        </LinearLayout>
 
     </RelativeLayout>
     <!-- End of Action Bar -->
@@ -156,7 +198,7 @@
         <com.example.vasileios.simplefiledialog.ExpandableHeightListView
             android:id="@+id/phone_files"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
         <!-- End of Files ListView -->
 
     </ScrollView>

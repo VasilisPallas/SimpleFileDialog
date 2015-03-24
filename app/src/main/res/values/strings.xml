@@ -9,6 +9,5 @@
     <string name="internal_storage_path">/storage/emulated/0</string>
     <string name="sd_storage">SD card storage</string>
     <string name="sd_storage_path">/mnt/extSdCard/</string>
-
-
+    <string name="search_hint">Search..</string>
 </resources>
