@@ -68,7 +68,7 @@ public class FileDialog extends Activity {
 
         searchText.addTextChangedListener(searchListView);
 
-        loadFiles();
+        loadFiles(null);
         fillList();
     }
 
@@ -94,7 +94,7 @@ public class FileDialog extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadFiles() {
+    private void loadFiles(final String s) {
         try {
             rootPath.mkdirs();
         } catch (SecurityException e) {
@@ -107,9 +107,13 @@ public class FileDialog extends Activity {
                 @Override
                 public boolean accept(File dir, String filename) {
                     File sel = new File(dir, filename);
-                    // Filters based on whether the file is hidden or not
+                    if (s == null) {
+                        // Filters based on whether the file is hidden or not
+                        return (sel.isFile() || sel.isDirectory())
+                                && !sel.isHidden();
+                    }
                     return (sel.isFile() || sel.isDirectory())
-                            && !sel.isHidden();
+                            && !sel.isHidden() && sel.getName().toLowerCase().contains(s.toLowerCase());
                 }
             };
 
@@ -215,7 +219,7 @@ public class FileDialog extends Activity {
                     rootPath = new File(selectedFile + "");
 
 
-                    loadFiles();
+                    loadFiles(null);
 
                     listView.setAdapter(null);
                     listView.setAdapter(customListAdapter);
@@ -239,7 +243,7 @@ public class FileDialog extends Activity {
                         isTopParent = true;
                     }
 
-                    loadFiles();
+                    loadFiles(null);
 
                     listView.setAdapter(null);
                     listView.setAdapter(customListAdapter);
@@ -317,7 +321,7 @@ public class FileDialog extends Activity {
             case R.id.internal_storage_layout:
                 rootPath = new File(Environment.getExternalStorageDirectory() + "");
                 isTopParent = true;
-                loadFiles();
+                loadFiles(null);
                 listView.setAdapter(customListAdapter);
                 hideView(menu);
                 listView.setEnabled(true);
@@ -331,7 +335,7 @@ public class FileDialog extends Activity {
                 }
                 if (rootPath.exists()) {
                     isTopParent = true;
-                    loadFiles();
+                    loadFiles(null);
                     listView.setAdapter(customListAdapter);
                     hideView(menu);
                     listView.setEnabled(true);
@@ -339,7 +343,7 @@ public class FileDialog extends Activity {
                     Toast.makeText(getApplicationContext(), "You don't have a SD card", Toast.LENGTH_SHORT).show();
                     rootPath = new File(Environment.getExternalStorageDirectory() + "");
                     isTopParent = true;
-                    loadFiles();
+                    loadFiles(null);
                     listView.setAdapter(customListAdapter);
                     listView.setEnabled(true);
                 }
@@ -363,16 +367,15 @@ public class FileDialog extends Activity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            ImageView deleteSearchIcon = (ImageView)findViewById(R.id.delete_search_icon);
-            if(count>0)
-            {
+            ImageView deleteSearchIcon = (ImageView) findViewById(R.id.delete_search_icon);
+            if (count > 0) {
                 deleteSearchIcon.setVisibility(View.VISIBLE);
-            }
-            else{
+            } else {
                 deleteSearchIcon.setVisibility(View.GONE);
             }
 
-            customListAdapter.getFilter().filter(s.toString());
+            loadFiles(s.toString());
+            fillList();
 
         }
 
