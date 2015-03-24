@@ -54,6 +54,13 @@
                 android:paddingLeft="8dp"
                 android:paddingTop="1dp"/>
 
+            <View
+                android:layout_marginLeft="2dp"
+                android:layout_width="1dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:background="#59B8B8B8"/>
+
             <EditText
                 android:id="@+id/search_text"
                 android:layout_width="100dp"
