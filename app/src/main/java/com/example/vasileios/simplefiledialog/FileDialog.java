@@ -54,6 +54,8 @@ public class FileDialog extends Activity {
 
     EditText searchText;
 
+    ImageView deleteSearchIcon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,7 +127,7 @@ public class FileDialog extends Activity {
 
                 // Convert into file rootPath
                 File selelected = new File(rootPath, fileList[i]);
-                String extension = selelected.getName().substring(selelected.getName().indexOf('.') + 1);
+                String extension = selelected.getName().substring(selelected.getName().indexOf('.') + 1).toLowerCase();
 
                 if (selelected.isDirectory()) {
                     bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.directory);
@@ -201,11 +203,17 @@ public class FileDialog extends Activity {
             return;
         }
 
+
         listView.setAdapter(customListAdapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (!searchText.getText().equals("")) {
+                    searchText.setText("");
+                    deleteSearchIcon.setVisibility(View.GONE);
+                }
 
                 chosenFile = imageItems.get(position).getTitle();
                 selectedFile = new File(rootPath + "/" + chosenFile);
@@ -317,6 +325,11 @@ public class FileDialog extends Activity {
 
     public void changePath(View v) {
 
+        if (!searchText.getText().equals("")) {
+            searchText.setText("");
+            deleteSearchIcon.setVisibility(View.GONE);
+        }
+
         switch (v.getId()) {
             case R.id.internal_storage_layout:
                 rootPath = new File(Environment.getExternalStorageDirectory() + "");
@@ -367,14 +380,14 @@ public class FileDialog extends Activity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
-            ImageView deleteSearchIcon = (ImageView) findViewById(R.id.delete_search_icon);
+            deleteSearchIcon = (ImageView) findViewById(R.id.delete_search_icon);
             if (count > 0) {
                 deleteSearchIcon.setVisibility(View.VISIBLE);
             } else {
                 deleteSearchIcon.setVisibility(View.GONE);
             }
 
-            loadFiles(s.toString());
+            loadFiles(s.toString().trim());
             fillList();
 
         }

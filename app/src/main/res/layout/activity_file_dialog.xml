@@ -58,7 +58,6 @@
                 android:id="@+id/search_text"
                 android:layout_width="100dp"
                 android:singleLine="true"
-                android:text="wsfsfsfsi"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="1dp"
