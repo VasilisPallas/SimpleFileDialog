@@ -306,11 +306,10 @@ public class FileDialog extends Activity {
             searchText.setText("");
             deleteSearchIcon.setVisibility(View.GONE);
         }
-
+        isTopParent = true;
         switch (v.getId()) {
             case R.id.internal_storage_layout:
                 rootPath = new File(Environment.getExternalStorageDirectory() + "");
-                isTopParent = true;
                 loadFiles(null);
                 listView.setAdapter(customListAdapter);
                 hideView(menu);
@@ -324,7 +323,6 @@ public class FileDialog extends Activity {
                     rootPath = new File("/mnt/external_sd/");
                 }
                 if (rootPath.exists()) {
-                    isTopParent = true;
                     loadFiles(null);
                     listView.setAdapter(customListAdapter);
                     hideView(menu);
@@ -332,7 +330,6 @@ public class FileDialog extends Activity {
                 } else {
                     Toast.makeText(getApplicationContext(), "You don't have a SD card", Toast.LENGTH_SHORT).show();
                     rootPath = new File(Environment.getExternalStorageDirectory() + "");
-                    isTopParent = true;
                     loadFiles(null);
                     listView.setAdapter(customListAdapter);
                     listView.setEnabled(true);
