@@ -22,7 +22,6 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 
@@ -229,7 +228,7 @@ public class FileDialog extends Activity {
                     listView.setAdapter(customListAdapter);
                 }// Checks if '..' was clicked
                 else if (chosenFile.equalsIgnoreCase("..")) {
-                    backButtonPresses();
+                    backButtonPressed();
                 } // Do something with the selected file here
                 else {
 
@@ -372,7 +371,7 @@ public class FileDialog extends Activity {
         }
     };
 
-    public void backButtonPresses()
+    public void backButtonPressed()
     {
         if (!isTopParent) {
             // present directory removed from list
@@ -404,6 +403,6 @@ public class FileDialog extends Activity {
 
     @Override
     public void onBackPressed() {
-        backButtonPresses();
+        backButtonPressed();
     }
 }
